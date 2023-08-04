@@ -1,6 +1,0 @@
-#spring:
-  #liquibase:
-    #enabled: false
-
-#server:
-#  port: 9093

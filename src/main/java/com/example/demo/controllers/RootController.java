@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @Slf4j
 @RestController
 @RequestMapping(path = "/")
@@ -30,13 +32,8 @@ public class RootController {
             description = "Ok",
             content = @Content(schema = @Schema(implementation = String.class))
     )
-    /*@ApiResponse(
-            responseCode = "401",
-            description = "Unauthorized",
-            content = @Content(schema = @Schema(implementation = BoatAPIError.class))
-    )*/
     public ResponseEntity<String> sayHello(@RequestParam(name = "name", required = false) String name) {
         log.debug("[GET] Say hello: {}", name);
-        return ResponseEntity.ok("Hello %s!".formatted(name));
+        return ResponseEntity.ok("Hello %s!".formatted(Optional.ofNullable(name).orElse("")));
     }
 }
