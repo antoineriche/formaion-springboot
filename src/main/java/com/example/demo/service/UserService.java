@@ -21,7 +21,7 @@ public class UserService {
      * @return the list of users in database
      */
     public List<User> findAllUsers() {
-        return repository.selectAllUsers();
+        return repository.findAll();
     }
 
     /**
@@ -30,7 +30,7 @@ public class UserService {
      * @return the user identified by its id, or empty if no one match
      */
     public Optional<User> findUserById(final long id) {
-        return repository.selectUserById(id);
+        return repository.findById(id);
     }
 
     /**
@@ -39,7 +39,7 @@ public class UserService {
      * @return the user saved
      */
     public User saveUser(final User user) {
-        return repository.createUser(user);
+        return repository.save(user);
     }
 
     /**
@@ -48,6 +48,11 @@ public class UserService {
      * @return true if the user could be deleted, false otherwise
      */
     public boolean deleteUserById(final long id) {
-        return repository.deleteUserById(id);
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+
+        return false;
     }
 }
